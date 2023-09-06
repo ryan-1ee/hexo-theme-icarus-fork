@@ -53,7 +53,10 @@ class Navbar extends Component {
                             return <a class={classname({ 'navbar-item': true, 'is-active': item.active })} href={item.url}>{name}</a>;
                         })}
                     </div> : null}
+                    
                     <div class="navbar-end">
+                        <div id="darkmode" onclick="switchDarkMode()"></div>
+
                         {Object.keys(links).length ? <Fragment>
                             {Object.keys(links).map(name => {
                                 const link = links[name];
@@ -66,7 +69,10 @@ class Navbar extends Component {
                             <i class="fas fa-list-ul"></i>
                         </a> : null}
                         {showSearch ? <a class="navbar-item search" title={searchTitle} href="javascript:;">
+
+
                             <i class="fas fa-search"></i>
+                            
                         </a> : null}
                     </div>
                 </div>
