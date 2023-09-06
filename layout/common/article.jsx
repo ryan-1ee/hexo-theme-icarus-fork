@@ -61,7 +61,7 @@ module.exports = class extends Component {
                                 {(() => {
                                     const categories = [];
                                     page.categories.forEach((category, i) => {
-                                        categories.push(<a class="link-muted" href={url_for(category.path)}>{category.name}</a>);
+                                        categories.push(<a class="link-muted" href={url_for(category.path)}> <i class="fa-solid fa-folder-open"></i>&nbsp; {category.name}</a>);
                                         if (i < page.categories.length - 1) {
                                             categories.push(<span>&nbsp;/&nbsp;</span>);
                                         }
@@ -70,7 +70,7 @@ module.exports = class extends Component {
                                 })()}
                             </span> : null}
                             {/* Read time */}
-                            {article && article.readtime && article.readtime === true ? <span class="level-item">
+                            {article && article.readtime && article.readtime === true ? <span class="level-item"> 
                                 {(() => {
                                     const words = getWordCount(page._content);
                                     const time = moment.duration((words / 150.0) * 60, 'seconds');
@@ -78,7 +78,7 @@ module.exports = class extends Component {
                                 })()}
                             </span> : null}
                             {/* Visitor counter */}
-                            {!index && plugins && plugins.busuanzi === true ? <span class="level-item" id="busuanzi_container_page_pv" dangerouslySetInnerHTML={{
+                            {!index && plugins && plugins.busuanzi === true ?  <span class="level-item" id="busuanzi_container_page_pv" dangerouslySetInnerHTML={{
                                 __html: _p('plugin.visit_count', '<span id="busuanzi_value_page_pv">0</span>')
                             }}></span> : null}
                         </div>

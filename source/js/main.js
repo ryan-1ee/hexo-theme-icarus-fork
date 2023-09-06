@@ -1,6 +1,6 @@
 /* eslint-disable node/no-unsupported-features/node-builtins */
-(function($, moment, ClipboardJS, config) {
-    $('.article img:not(".not-gallery-item")').each(function() {
+(function ($, moment, ClipboardJS, config) {
+    $('.article img:not(".not-gallery-item")').each(function () {
         // wrap images with link and add caption if possible
         if ($(this).parent('a').length === 0) {
             $(this).wrap('<a class="gallery-item" href="' + $(this).attr('src') + '"></a>');
@@ -21,12 +21,12 @@
     }
 
     if (typeof moment === 'function') {
-        $('.article-meta time').each(function() {
-            $(this).text(moment($(this).attr('datetime')).fromNow());
+        $('.article-meta time').each(function () {
+            $(this).text(moment($(this).attr('datetime')).format("YYYY-MM-DD"));
         });
     }
 
-    $('.article > .content > table').each(function() {
+    $('.article > .content > table').each(function () {
         if ($(this).width() > $(this).parent().width()) {
             $(this).wrap('<div class="table-overflow"></div>');
         }
@@ -60,7 +60,7 @@
         && typeof config.article.highlight !== 'undefined') {
 
         $('figure.highlight').addClass('hljs');
-        $('figure.highlight .code .line span').each(function() {
+        $('figure.highlight .code .line span').each(function () {
             const classes = $(this).attr('class').split(/\s+/);
             for (const cls of classes) {
                 $(this).addClass('hljs-' + cls);
@@ -72,7 +72,7 @@
         const clipboard = config.article.highlight.clipboard;
         const fold = config.article.highlight.fold.trim();
 
-        $('figure.highlight').each(function() {
+        $('figure.highlight').each(function () {
             if ($(this).find('figcaption').length) {
                 $(this).find('figcaption').addClass('level is-mobile');
                 $(this).find('figcaption').append('<div class="level-left">');
@@ -87,7 +87,7 @@
         });
 
         if (typeof ClipboardJS !== 'undefined' && clipboard) {
-            $('figure.highlight').each(function() {
+            $('figure.highlight').each(function () {
                 const id = 'code-' + Date.now() + (Math.random() * 1000 | 0);
                 const button = '<a href="javascript:;" class="copy" title="Copy" data-clipboard-target="#' + id + ' .code"><i class="fas fa-copy"></i></a>';
                 $(this).attr('id', id);
@@ -97,7 +97,7 @@
         }
 
         if (fold) {
-            $('figure.highlight').each(function() {
+            $('figure.highlight').each(function () {
                 $(this).addClass('foldable'); // add 'foldable' class as long as fold is enabled
 
                 if ($(this).find('figcaption').find('span').length > 0) {
@@ -113,7 +113,7 @@
                 toggleFold(this, fold === 'folded');
             });
 
-            $('figure.highlight figcaption .level-left').click(function() {
+            $('figure.highlight figcaption .level-left').click(function () {
                 const $code = $(this).closest('figure.highlight');
                 toggleFold($code.eq(0), !$code.hasClass('folded'));
             });
@@ -137,3 +137,29 @@
         $('.navbar-main .catalogue').on('click', toggleToc);
     }
 }(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings));
+
+console.log('1111')
+function changeDarkTheme() {
+    document.documentElement.classList.toggle("dark-theme");
+    if (document.documentElement.classList.contains("dark-theme")) {
+        sessionStorage.setItem("hexoTheme", "1");
+    } else {
+        sessionStorage.setItem("hexoTheme", "0");
+    }
+}
+
+if (sessionStorage.getItem("hexoTheme") === null) {
+    //第一次访问网站，试图参考系统设定
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    if (prefersDarkScheme.matches) {
+        sessionStorage.setItem("hexoTheme", "1");
+        changeDarkTheme();
+    } else {
+        sessionStorage.setItem("hexoTheme", "0");
+    }
+} else {
+    const theme = sessionStorage.getItem("hexoTheme");
+    if (theme == 1) {
+        changeDarkTheme();
+    }
+}
