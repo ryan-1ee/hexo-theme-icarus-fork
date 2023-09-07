@@ -55,8 +55,7 @@ class Navbar extends Component {
                     </div> : null}
                     
                     <div class="navbar-end">
-                        <div id="darkmode" onclick="switchDarkMode()"></div>
-
+                        <div id="darkmode" class="navbar-item"  title='夜间模式' onclick="switchDarkMode()"></div>
                         {Object.keys(links).length ? <Fragment>
                             {Object.keys(links).map(name => {
                                 const link = links[name];
